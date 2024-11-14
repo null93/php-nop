@@ -1,0 +1,7 @@
+ARG_ENABLE('nop', 'nop support', 'no');
+
+if (PHP_NOP != 'no') {
+	AC_DEFINE('HAVE_NOP', 1, "Define to 1 if the PHP extension 'nop' is available.");
+
+	EXTENSION('nop', 'nop.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
