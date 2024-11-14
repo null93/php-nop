@@ -17,10 +17,15 @@ Notice that `nop.ignore_functions` is a comma-separated list of functions that y
 
 ## Development
 
-```
-# Run inside docker container
-docker run -v `pwd`:/usr/src -w /usr/src --rm -it php:8.3-cli-alpine sh
+Spin up a Docker container:
 
+```shell
+docker run -v `pwd`:/usr/src -w /usr/src --rm -it php:8.3-cli-alpine sh
+```
+
+Inside the container, run the following commands:
+
+```shell
 # Install build dependencies and build the extension
 apk --update add php83-dev make g++
 phpize && ./configure && make && make install
