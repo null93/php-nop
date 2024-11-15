@@ -1,0 +1,20 @@
+name: php-nop
+arch: ${ARCH}
+platform: linux
+version: ${VERSION}
+section: php
+priority: optional
+maintainer: Rafael Grigorian <rafael@grigorian.org>
+homepage: https://github.com/null93/php-nop
+license: MIT
+description: PHP extension that replaces any function with a NOP function
+contents:
+  - src: private/shared-objects/nop_${ARCH}_${PHP_VERSION}.so.out
+    dst: /usr/lib/php/$PHP_API_VERSION/nop.so
+    file_info:
+      mode: 0755
+  - src: conf/nop.ini
+    dst: /etc/php/${PHP_VERSION}/mods-available/nop.ini
+    type: config
+depends:
+  - php-common (>= ${PHP_VERSION})

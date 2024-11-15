@@ -1,0 +1,34 @@
+#!/bin/bash
+
+arch=`uname -a | grep -q 'x86_64' && echo 'amd64' || echo 'arm64'`
+php_version=`php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;'`
+output_path="./private/shared-objects/nop_${arch}_${php_version}.so.out"
+
+echo "BUILDING: ${arch} php-${php_version})"
+
+# configure the build
+
+phpize
+./configure
+
+# build the extension and test
+
+make
+make install
+NO_INTERACTION=true make test
+
+# stash the shared object
+
+mkdir -p ./private/shared-objects
+mv ./modules/nop.so "${output_path}"
+
+# clean up
+
+make clean
+
+# output file path
+
+echo
+echo "OUTPUT: ${output_path}"
+echo
+ls -la "${output_path}"

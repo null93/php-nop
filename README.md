@@ -36,7 +36,18 @@ php -d 'extension=nop.so' -d 'nop.functions=' -r 'printf ("hi\n");'
 php -d 'extension=nop.so' -d 'nop.functions=printf' -r 'printf ("hi\n");'
 ```
 
+## Package Extension
+
+```shell
+# Build all inside docker container
+./scripts/build-all
+
+# Package for Debian
+nfpm pkg --packager deb --target ./private/php8.3-nop_0.1.0_arm64.deb
+```
+
 ## Additional Resources
 
 - https://www.phpinternalsbook.com/
 - https://www.zend.com/sites/zend/files/pdfs/whitepaper-zend-php-extensions.pdf
+- https://www.zend.com/resources/writing-php-extensions

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ "$VERSION" = "" ]]; then
+    echo "Error: VERSION is not set"
+    exit 1
+fi
+
+if [[ "$PHP_VERSION" = "" ]]; then
+    echo "Error: PHP_VERSION is not set"
+    exit 1
+fi
+
+if [[ "$ARCH" = "" ]]; then
+    echo "Error: ARCH is not set"
+    exit 1
+fi
+
+php_api_versions_map=`cat << EOF
+7.2=20170718
+7.3=20180731
+7.4=20190902
+8.0=20200930
+8.1=20210902
+8.2=20220829
+8.3=20230831
+EOF`
+
+export PHP_API_VERSION=`echo "$php_api_versions_map" | grep -E "^${PHP_VERSION}=" | cut -d '=' -f 2 | xargs`
+
+if [[ "$PHP_API_VERSION" = "" ]]; then
+    echo "Error: PHP_API_VERSION is not set"
+    exit 1
+fi
+
+envsubst < nfpm.template.yaml > "nfpm.${ARCH}.${PHP_VERSION}.yaml"
+cat "nfpm.${ARCH}.${PHP_VERSION}.yaml"
