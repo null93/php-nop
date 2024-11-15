@@ -17,7 +17,7 @@
 #endif
 
 ZEND_BEGIN_MODULE_GLOBALS(nop)
-    char *ignore_functions;
+    char *functions;
 ZEND_END_MODULE_GLOBALS(nop)
 
 ZEND_DECLARE_MODULE_GLOBALS(nop)
@@ -30,7 +30,7 @@ ZEND_DECLARE_MODULE_GLOBALS(nop)
 
 static void php_nop_init_globals(zend_nop_globals *nop_globals)
 {
-    nop_globals->ignore_functions = NULL;
+    nop_globals->functions = NULL;
 }
 
 PHP_FUNCTION(no_operation)
@@ -50,7 +50,7 @@ PHP_RINIT_FUNCTION(nop)
 /* }}} */
 
 PHP_INI_BEGIN()
-    STD_PHP_INI_ENTRY("nop.ignore_functions", "", PHP_INI_ALL, OnUpdateString, ignore_functions, zend_nop_globals, nop_globals)
+    STD_PHP_INI_ENTRY("nop.functions", "", PHP_INI_ALL, OnUpdateString, functions, zend_nop_globals, nop_globals)
 PHP_INI_END()
 
 /* {{{ PHP_MINIT_FUNCTION */
@@ -59,10 +59,10 @@ PHP_MINIT_FUNCTION(nop)
     ZEND_INIT_MODULE_GLOBALS(nop, php_nop_init_globals, NULL);
 	REGISTER_INI_ENTRIES();
 
-	char *ignore_functions = NOP_G(ignore_functions);
-	if (ignore_functions != NULL) {
+	char *functions = NOP_G(functions);
+	if (functions != NULL) {
 		char *token;
-		char *rest = ignore_functions;
+		char *rest = functions;
 		while ((token = strtok_r(rest, ",", &rest))) {
 			zend_function *original;
 			original = zend_hash_str_find_ptr(CG(function_table), token, strlen(token));

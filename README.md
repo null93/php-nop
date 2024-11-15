@@ -10,10 +10,10 @@ Once you copy the `.so` file to the PHP extensions directory, you can enable it 
 
 ```ini
 extension=nop.so
-nop.ignore_functions=chmod,chown
+nop.functions=chmod,chown
 ```
 
-Notice that `nop.ignore_functions` is a comma-separated list of functions that you want to replace with the NOP function.
+Notice that `nop.functions` is a comma-separated list of functions that you want to replace with the NOP function.
 
 ## Development
 
@@ -29,16 +29,11 @@ Inside the container, run the following commands:
 # Install build dependencies and build the extension
 apk --update add php83-dev make g++
 phpize && ./configure && make && make install
+make test
 
-# Setup a quick test
-touch ./private/sample
-echo "<?php chmod(__DIR__ . '/sample', 0777);" > ./private/sample.php
-
-# Run the test
-chmod 644 ./private/sample
-ls -la ./private/sample
-php -d 'extension=nop.so' -d 'nop.ignore_functions=chmod' ./private/sample.php
-ls -la ./private/sample
+# Manually test functionality
+php -d 'extension=nop.so' -d 'nop.functions=' -r 'printf ("hi\n");'
+php -d 'extension=nop.so' -d 'nop.functions=printf' -r 'printf ("hi\n");'
 ```
 
 ## Additional Resources
