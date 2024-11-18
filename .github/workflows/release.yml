@@ -37,7 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: linux/${{ matrix.arch }}
       - name: Build nop_${{ matrix.arch }}_${{ matrix.php_version }}.so.out
