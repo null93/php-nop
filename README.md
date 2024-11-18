@@ -38,12 +38,14 @@ php -d 'extension=nop.so' -d 'nop.functions=printf' -r 'printf ("hi\n");'
 
 ## Package Extension
 
-```shell
-# Build all inside docker container
-./scripts/build-all
+Automatically packaged with NFPM and Github actions. Simply tag and push. If you need to manually package, run the following:
 
-# Package for Debian
-nfpm pkg --packager deb --target ./private/php8.3-nop_0.1.0_arm64.deb
+```shell
+export VERSION=0.1.0
+export PHP_VERSION=8.3
+export ARCH=amd64
+./scripts/nfpm-template > nfpm.yaml
+nfpm pkg --packager deb --target php8.3_nop_amd64.deb
 ```
 
 ## Additional Resources
