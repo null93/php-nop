@@ -6,7 +6,15 @@ The NOP replacement function does not return any value so it is not guaranteed t
 
 ## Installation
 
-Once you copy the `.so` file to the PHP extensions directory, you can enable it by adding the following line to your `php.ini` file:
+You can install this extension via the deb packages in the releases section.
+For example, to install the extension for PHP 8.3 on an ARM64 machine, run the following:
+
+```shell
+curl -sLo ./php8.3-nop_arm64_0.1.0.deb https://github.com/null93/php-nop/releases/download/0.1.0/php8.3-nop_arm64_0.1.0.deb
+apt install ./php8.3-nop_arm64_0.1.0.deb
+```
+
+Next, you will want to enable the extension in your PHP configuration file.
 
 ```ini
 extension=nop.so
